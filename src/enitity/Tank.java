@@ -1,11 +1,10 @@
 package enitity;
 
-import org.w3c.dom.css.Rect;
 import utills.HitBlock;
 import utills.Direction;
 import utills.imageManager.TankImage;
 import utills.pool.BulletPool;
-import utills.HitBlock;
+import game.MainGame;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -20,9 +19,13 @@ public class Tank extends Entity{
     private BulletPool pool;
     private List<Bullet> bullets;
     private int speed = 1;
+    private int borderWidth;
+    private int borderHeight;
 
-    public Tank(int x, int y, Direction direction) {
+    public Tank(int x, int y, Direction direction, int width, int height) {
         super(x, y);
+        this.borderHeight = height;
+        this.borderWidth = width;
         this.pool = new BulletPool();
         this.bullets = new ArrayList<Bullet>();
         this.setDirection(direction);
@@ -72,7 +75,14 @@ public class Tank extends Entity{
         this.isMove = false;
     }
 
-    public void canGo(Entity obs) {
+    public void canGo() {
+        if (getX()+facing.getX()*speed > borderWidth || getY()+facing.getY()*speed > borderHeight || getX()+facing.getX()*speed < 0 || getY()+facing.getY()*speed < 0) {
+            setX((int) (getX() - facing.getX()*speed*2));
+            setY((int) (getY() - facing.getY()*speed*2));
+        }
+    }
+
+    public void isCollapse(Entity obs) {
         Rectangle r1 = new Rectangle(obs.getX()-15, obs.getY(), obs.getWidth()+15,obs.getHeight());
         Rectangle r2 = new Rectangle(
                 getX()+facing.getX()*speed,
@@ -80,15 +90,18 @@ public class Tank extends Entity{
                 getWidth(),
                 getHeight()
         );
-        if (r2.intersects(r1)) {
-            setX((int) (getX() - facing.getX()*speed*2));
-            setY((int) (getY() - facing.getY()*speed*2));
+
+        if (r2.intersects(r1)){
             if (obs instanceof Tank) {
                 if (((Tank) obs).getFacing() == Direction.LEFT) {
                     ((Tank) obs).setX(((Tank) obs).getX() - ((Tank) obs).getFacing().getX()*5);
                     ((Tank) obs).stop();
                 }
 
+            }
+            else {
+                setX((int) (getX() - facing.getX()*speed*2));
+                setY((int) (getY() - facing.getY()*speed*2));
             }
             stop();
         }

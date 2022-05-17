@@ -2,10 +2,12 @@ package game;
 
 import enitity.*;
 import utills.Direction;
+import utills.MenuAPI.GameMode;
 import utills.pool.ExplosionPool;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -18,18 +20,43 @@ public class MainGame extends Observable {
     private List<Explosion> explosions = new ArrayList<>();
     private ExplosionPool explosionPool;
     private List<Tank> players;
+    private int borderWidth;
+    private int borderHeight;
     private List<Obstruction> construction;
     private String mapName;
+    private List<TankAI> aiList;
+    int amount = 4;
+    private String isWin;
+    private GameMode mode;
 
-    public MainGame(String mapName) {
+    public MainGame(String mapName, int cellSize, GameMode mode) {
+        this.mode = mode;
         this.mapName = mapName;
+        aiList = new ArrayList<>();
         construction = new ArrayList<Obstruction>();
         readMap();
-        players = new ArrayList<Tank>(Arrays.asList(new Tank(64,height*64/2, Direction.RIGHT), new Tank(width*64-64,height*64/2, Direction.LEFT)));
+        borderWidth = (width-1)*cellSize;
+        borderHeight = (height-1)*cellSize;
+        players = new ArrayList<Tank>();
+        players.add(new Tank(cellSize,height*cellSize/2, Direction.RIGHT, borderWidth, borderHeight)); // player1
+        if (mode == GameMode.AI) {
+            int randomNum1;
+            int randomNum2;
+            for (int i=0; i< amount; i++) {
+                while(true) {
+                    randomNum1 = ThreadLocalRandom.current().nextInt(0, map.size()-1 + 1);
+                    randomNum2 = ThreadLocalRandom.current().nextInt(0, map.get(0).size()-1 + 1);
+                    if (map.get(randomNum1).get(randomNum2) == 0) {break;}
+                }
+                aiList.add(new TankAI(randomNum2*cellSize, randomNum1*cellSize, Direction.RIGHT, borderWidth, borderHeight));
+            }
 
+        }
+        else {
+            players.add(new Tank(width*cellSize-cellSize,height*cellSize/2, Direction.LEFT, borderWidth, borderHeight));
+        }
 
         explosionPool = new ExplosionPool();
-
 
         mainloop  = new Thread() {
             @Override
@@ -78,24 +105,47 @@ public class MainGame extends Observable {
         }
     }
 
+
+
     private void tick() {
         update();
         cleanupBullet();
         checkHit();
+
         cleanupExplode();
         cleanupRock();
+        cleanUpTank();
+        checkWin();
+    }
+
+    public boolean isEnd() {
+        return isWin != null;
+    }
+
+    public void pause() {
+        mainloop.suspend();
+    }
+
+    public void resume() {
+        mainloop.resume();
+    }
+
+    public List<TankAI> getAI() {
+        return aiList;
     }
 
     private void update() {
-        for (Tank tank: getPlayers()) {
+
+        for (Tank tank: getALlTank()) {
             for (Obstruction obs: construction) {
-                tank.canGo(obs);
+                tank.isCollapse(obs);
             }
-            List<Tank> othersTank = new ArrayList<>(getPlayers());
+            List<Tank> othersTank = new ArrayList<>(getALlTank());
             othersTank.remove(othersTank.indexOf(tank));
             for (Tank otherTank: othersTank) {
-                tank.canGo(otherTank);
+                tank.isCollapse(otherTank);
             }
+            tank.canGo();
             tank.update();
         }
 
@@ -112,7 +162,9 @@ public class MainGame extends Observable {
     public List<List<Integer>> getMap() {
         return map;
     }
-
+    private List<Tank> getALlTank() {
+        return Stream.concat(getAI().stream(), getPlayers().stream()).collect(Collectors.toList());
+    }
     public int getWidth() {
         return width;
     }
@@ -121,16 +173,47 @@ public class MainGame extends Observable {
         return height;
     }
 
+    public String getWinner() {
+        return  isWin;
+    }
+
+    public void checkWin() {
+        if (mode == GameMode.AI && getAI().size() == 0) {
+            isWin = "YOU WIN";
+            pause();
+            return;
+        }
+        for (Entity ex: players) {
+            if (ex.getHitState()) {
+                if (mode == GameMode.AI && ex == players.get(0)) {
+                    isWin = "YOU LOSE";
+                    pause();
+                    return;
+                } else if (mode == GameMode.ONE_ON_ONE ) {
+                    if (ex == players.get(0)){
+                        isWin = "PLAYER 1 WIN!";
+                        pause();
+                    }
+                    else if(ex == players.get(1)) {
+                        isWin = "PLAYER 2 WIN!";
+                        pause();
+                    }
+                    return;
+                }
+            }
+        }
+    }
 
     public List<Entity> getAllEntity() {
         List<Entity> out = Stream.concat(players.stream(), getBullets().stream()).collect(Collectors.toList());
         out = Stream.concat(out.stream(), construction.stream()).collect(Collectors.toList());
+        out = Stream.concat(out.stream(), getAI().stream()).collect(Collectors.toList());
         return  Stream.concat(out.stream(), explosions.stream()).collect(Collectors.toList());
     }
 
     public void checkHit() {
         List<Entity> canHit = new ArrayList<Entity>();
-        canHit = Stream.concat(players.stream(), construction.stream()).collect(Collectors.toList());
+        canHit = Stream.concat(getALlTank().stream(), construction.stream()).collect(Collectors.toList());
         for (Bullet bullet: getBullets()) {
             for (Entity enti: canHit) {
                 if (bullet.isHit(enti)){
@@ -142,6 +225,18 @@ public class MainGame extends Observable {
 
     }
 
+    public void cleanUpTank() {
+
+        List<Entity> toRemove = new ArrayList<Entity>();
+        for (Entity ex: getAI()) {
+            if (ex.getHitState()) {
+                toRemove.add(ex);
+            }
+        }
+        for (Entity ex: toRemove) {
+            getAI().remove(ex);
+        }
+    }
 
     public void cleanupRock() {
         List<Entity> toRemove = new ArrayList<Entity>();
@@ -175,14 +270,14 @@ public class MainGame extends Observable {
 
     public List<Bullet> getBullets() {
         List<Bullet> out = new ArrayList<Bullet>();
-        for (Tank player: players) {
+        for (Tank player: getALlTank()) {
             out = Stream.concat(out.stream(), player.getBullets().stream()).collect(Collectors.toList());
         }
         return out;
     }
 
     private void cleanupBullet() {
-        for (Tank player: players) {
+        for (Tank player: getALlTank()) {
             List<Bullet> toRemove = new ArrayList<Bullet>();
             for (Bullet bullet: player.getBullets()) {
                 if (bullet.getX() <= 0 || bullet.getX() >= width * 64 || bullet.getY() <= 0 || bullet.getY() >= height*64 || bullet.isHit()) {
