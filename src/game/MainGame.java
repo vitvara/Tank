@@ -191,11 +191,11 @@ public class MainGame extends Observable {
                     return;
                 } else if (mode == GameMode.ONE_ON_ONE ) {
                     if (ex == players.get(0)){
-                        isWin = "PLAYER 1 WIN!";
+                        isWin = "PLAYER 2 WIN!";
                         pause();
                     }
                     else if(ex == players.get(1)) {
-                        isWin = "PLAYER 2 WIN!";
+                        isWin = "PLAYER 1 WIN!";
                         pause();
                     }
                     return;

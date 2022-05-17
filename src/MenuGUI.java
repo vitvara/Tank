@@ -49,10 +49,8 @@ public class MenuGUI extends JPanel{
 
     public void initButton() {
         startButton.setBounds(menuSize/2-menuSize/4,menuSize/4+(menuSize/20)*1,menuSize/2,40);
-        settingButton.setBounds(menuSize/2-menuSize/4,menuSize/4+(menuSize/20)*2,menuSize/2,40);
-        exitButton.setBounds(menuSize/2-menuSize/4,menuSize/4+(menuSize/20)*3,menuSize/2,40);
+        exitButton.setBounds(menuSize/2-menuSize/4,menuSize/4+(menuSize/20)*2,menuSize/2,40);
         add(startButton);
-        add(settingButton);
         add(exitButton);
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -63,6 +61,12 @@ public class MenuGUI extends JPanel{
                 exitButton.setVisible(false);
                 selectMap();
                 repaint();
+            }
+        });
+        exitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
     }

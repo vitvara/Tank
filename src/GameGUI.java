@@ -93,7 +93,7 @@ public class GameGUI extends JPanel implements ActionListener{
             }
         }
         for (Tank tank: maingame.getPlayers()) {
-            g.drawString("P " + maingame.getPlayers().indexOf(tank), tank.getX(), tank.getY());
+            g.drawString("P " + (maingame.getPlayers().indexOf(tank)+1), tank.getX(), tank.getY());
         }
         if (!maingame.getAllEntity().isEmpty()) {
             for (Entity ele: maingame.getAllEntity()) {
