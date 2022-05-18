@@ -32,6 +32,8 @@ finish
 
 ## How to play
 
+> __preess ESC to pause the game__
+
 One-on-One Control
 
 
@@ -61,3 +63,53 @@ A move left
 D move right
 space shoot
 ```
+
+## Add more map (for Windows user Only)
+
+create text map (text file .txt)
+format
+```
+0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0
+0,0,0,0,0,0,0,0,0
+```
+```
+0 is plain field 
+
+1 is water 
+
+2 is tree bind vision
+
+3 is rock block tank movement, can destroy
+
+4 is steel block tank movement, can not destroy
+```
+Go to Game source path default `C:\Program Files\Tank2D`
+<img width="604" alt="image" src="https://user-images.githubusercontent.com/69972884/169033347-0a5c3564-b406-4090-ae0a-a515d4a93f21.png">
+
+click folder map
+
+<img width="591" alt="image" src="https://user-images.githubusercontent.com/69972884/169031725-36342cd3-877c-4e61-a5c4-04201c45b2ad.png">
+
+paste your map to this folder
+
+<img width="583" alt="image" src="https://user-images.githubusercontent.com/69972884/169032198-fdef50eb-f01d-447c-9a4f-cb381f7563a7.png">
+
+now your new map should be in the game
+
+<img width="738" alt="image" src="https://user-images.githubusercontent.com/69972884/169032256-604c585a-859f-448e-a03e-8f7b5d77a5f5.png">
+
+
+## Gameplay
+One-on-One
+<img width="950" alt="image" src="https://user-images.githubusercontent.com/69972884/169032583-d708cf7c-a68f-46c8-aaa6-a33743f17b82.png">
+
+Fight with AI
+<img width="991" alt="image" src="https://user-images.githubusercontent.com/69972884/169032790-b35051c7-5bd8-41be-b7bd-891449e6b2dd.png">
+
+
+
+
