@@ -120,19 +120,15 @@ public class GameGUI extends JPanel implements ActionListener{
     public void paintTile(Graphics g, int id, int row, int col) {
         int x = col * cellSize;
         int y = row * cellSize;
-        if (id == 0) {
-            g.drawImage(baseTile, x, y, cellSize, cellSize, null);
-        }
-        else if (id == 1) {
+        if (id == 1) {
             g.drawImage(oceanTile, x, y, cellSize, cellSize, null);
+            return;
         }
         else if (id == 2) {
             treePosition.add(new AbstractMap.SimpleEntry<>(x,y));
-            g.drawImage(baseTile, x, y, cellSize, cellSize, null);
         }
-        else if (id == 3) {
-            g.drawImage(baseTile, x, y, cellSize, cellSize, null);
-        }
+        g.drawImage(baseTile, x, y, cellSize, cellSize, null);
+
 
     }
 

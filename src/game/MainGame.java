@@ -12,31 +12,39 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MainGame extends Observable {
-
-    private Thread mainloop;
     private int width;
     private int height;
-    private List<List<Integer>> map = new ArrayList<>();
-    private List<Explosion> explosions = new ArrayList<>();
-    private ExplosionPool explosionPool;
-    private List<Tank> players;
     private int borderWidth;
     private int borderHeight;
-    private List<Obstruction> construction;
-    private String mapName;
+    private int amount = 4;
+
+    private List<List<Integer>> map = new ArrayList<>();
+    private List<Explosion> explosions = new ArrayList<>();
+    private List<Tank> players;
     private List<TankAI> aiList;
-    int amount = 4;
+    private List<Obstruction> construction;
+
+    private String mapName;
     private String isWin;
+
+    private ExplosionPool explosionPool;
+
     private GameMode mode;
+
+    private Thread mainloop;
 
     public MainGame(String mapName, int cellSize, GameMode mode) {
         this.mode = mode;
         this.mapName = mapName;
+
         aiList = new ArrayList<>();
         construction = new ArrayList<Obstruction>();
+
         readMap();
+
         borderWidth = (width-1)*cellSize;
         borderHeight = (height-1)*cellSize;
+
         players = new ArrayList<Tank>();
         players.add(new Tank(cellSize,height*cellSize/2, Direction.RIGHT, borderWidth, borderHeight)); // player1
         if (mode == GameMode.AI) {
@@ -87,6 +95,9 @@ public class MainGame extends Observable {
                 for (int i=0; i<strCell.length; i++) {
                     if (Integer.parseInt(strCell[i]) == 3) {
                         construction.add(new Rock(i*64, j*64));
+                    }
+                    if (Integer.parseInt(strCell[i]) == 4) {
+                        construction.add(new Steel(i*64, j*64));
                     }
                     realCell.add(Integer.parseInt(strCell[i]));
 
