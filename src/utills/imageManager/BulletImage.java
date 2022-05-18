@@ -1,29 +1,24 @@
 package utills.imageManager;
-
-import enitity.Bullet;
 import utills.Direction;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
 public enum BulletImage {
-    lightBulletUp("image/LightBulletUp.png"),
-    lightBulletDown("image/LightBulletDown.png"),
-    lightBulletRight("image/LightBulletRight.png"),
-    lightBulletLeft("image/LightBulletLeft.png")
+    lightBulletUp(BulletImage.class.getClassLoader().getResourceAsStream("res/LightBulletUp.png")),
+    lightBulletDown(BulletImage.class.getClassLoader().getResourceAsStream("res/LightBulletDown.png")),
+    lightBulletRight(BulletImage.class.getClassLoader().getResourceAsStream("res/LightBulletRight.png")),
+    lightBulletLeft(BulletImage.class.getClassLoader().getResourceAsStream("res/LightBulletLeft.png"))
     ;
-    private String filename;
 
     private BufferedImage lightBulletImage;
 
 
-    BulletImage(String filename)  {
+    BulletImage(InputStream filename)  {
         try {
-            lightBulletImage = ImageIO.read(new File(filename));
+            lightBulletImage = ImageIO.read(filename);
         } catch (Exception e) {
             System.out.println(filename + " File not found");
         }

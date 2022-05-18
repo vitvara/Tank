@@ -33,12 +33,12 @@ C  0x00007fff0ba131a4
 
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  sun.java2d.d3d.D3DSurfaceData.initOps(III)V+0 java.desktop@11.0.13
-j  sun.java2d.d3d.D3DSurfaceData.<init>(Lsun/awt/windows/WComponentPeer;Lsun/java2d/d3d/D3DGraphicsConfig;IILjava/awt/Image;Ljava/awt/image/ColorModel;IILsun/java2d/pipe/hw/ExtendedBufferCapabilities$VSyncType;I)V+212 java.desktop@11.0.13
-j  sun.java2d.d3d.D3DSurfaceData.createData(Lsun/java2d/d3d/D3DGraphicsConfig;IILjava/awt/image/ColorModel;Ljava/awt/Image;I)Lsun/java2d/d3d/D3DSurfaceData;+70 java.desktop@11.0.13
+j  sun.java2d.d3d.D3DSurfaceData.<init>(Lsun/awt/windows/WComponentPeer;Lsun/java2d/d3d/D3DGraphicsConfig;IILjava/awt/Image;Ljava/awt/res/ColorModel;IILsun/java2d/pipe/hw/ExtendedBufferCapabilities$VSyncType;I)V+212 java.desktop@11.0.13
+j  sun.java2d.d3d.D3DSurfaceData.createData(Lsun/java2d/d3d/D3DGraphicsConfig;IILjava/awt/res/ColorModel;Ljava/awt/Image;I)Lsun/java2d/d3d/D3DSurfaceData;+70 java.desktop@11.0.13
 j  sun.java2d.d3d.D3DVolatileSurfaceManager.initAcceleratedSurface()Lsun/java2d/SurfaceData;+142 java.desktop@11.0.13
 j  sun.java2d.d3d.D3DVolatileSurfaceManager.restoreAcceleratedSurface()V+49 java.desktop@11.0.13
-j  sun.awt.image.VolatileSurfaceManager.validate(Ljava/awt/GraphicsConfiguration;)I+94 java.desktop@11.0.13
-j  sun.awt.image.SunVolatileImage.validate(Ljava/awt/GraphicsConfiguration;)I+5 java.desktop@11.0.13
+j  sun.awt.res.VolatileSurfaceManager.validate(Ljava/awt/GraphicsConfiguration;)I+94 java.desktop@11.0.13
+j  sun.awt.res.SunVolatileImage.validate(Ljava/awt/GraphicsConfiguration;)I+5 java.desktop@11.0.13
 j  javax.swing.RepaintManager$PaintManager.paint(Ljavax/swing/JComponent;Ljavax/swing/JComponent;Ljava/awt/Graphics;IIII)Z+78 java.desktop@11.0.13
 J 1655 c1 javax.swing.RepaintManager.paint(Ljavax/swing/JComponent;Ljavax/swing/JComponent;Ljava/awt/Graphics;IIII)V java.desktop@11.0.13 (93 bytes) @ 0x0000017110f65d54 [0x0000017110f658c0+0x0000000000000494]
 J 1322 c1 javax.swing.JComponent.paint(Ljava/awt/Graphics;)V java.desktop@11.0.13 (409 bytes) @ 0x0000017110e7e8c4 [0x0000017110e7c2a0+0x0000000000002624]

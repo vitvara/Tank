@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
 import java.util.*;
 
 import utills.MenuAPI.GameMode;
@@ -30,7 +31,8 @@ public class MenuGUI extends JPanel{
 
     public MenuGUI(GUI gui) {
         try {
-            logo = ImageIO.read(new File("image/logo.png"));
+            System.out.println(getClass().getResourceAsStream("res/logo.png"));
+            logo = ImageIO.read(getClass().getResourceAsStream("res/logo.png"));
         } catch (Exception e) {
             System.out.println("Can't find logo image");
         }

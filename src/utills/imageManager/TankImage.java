@@ -3,22 +3,20 @@ package utills.imageManager;
 import utills.Direction;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
+import java.io.InputStream;
 
 public enum TankImage {
-    tankUp("image/TankUp.png"),
-    tankDown("image/TankDown.png"),
-    tankLeft("image/TankLeft.png"),
-    tankRight("image/TankRight.png"),
+    tankUp(TankImage.class.getClassLoader().getResourceAsStream("res/TankUp.png")),
+    tankDown(TankImage.class.getClassLoader().getResourceAsStream("res/TankDown.png")),
+    tankLeft(TankImage.class.getClassLoader().getResourceAsStream("res/TankLeft.png")),
+    tankRight(TankImage.class.getClassLoader().getResourceAsStream("res/TankRight.png")),
     ;
     private BufferedImage tankImage;
-    TankImage(String filename) {
+    TankImage(InputStream filename) {
         try {
-            tankImage = ImageIO.read(new File(filename));
+            tankImage = ImageIO.read(filename);
         } catch (Exception e) {
             System.out.println(filename + " File not found");
         }

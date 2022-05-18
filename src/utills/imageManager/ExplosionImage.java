@@ -1,31 +1,26 @@
 package utills.imageManager;
 
-import enitity.Explosion;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.io.InputStream;
 
 public enum ExplosionImage {
-    A("image/Effect/Explosion_A.png"),
-    B("image/Effect/Explosion_B.png"),
-    C("image/Effect/Explosion_C.png"),
-    D("image/Effect/Explosion_D.png"),
-    E("image/Effect/Explosion_E.png"),
-    F("image/Effect/Explosion_F.png"),
-    G("image/Effect/Explosion_G.png"),
-    H("image/Effect/Explosion_H.png")
+    A(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_A.png")),
+    B(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_B.png")),
+    C(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_C.png")),
+    D(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_D.png")),
+    E(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_E.png")),
+    F(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_F.png")),
+    G(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_G.png")),
+    H(ExplosionImage.class.getClassLoader().getResourceAsStream("res/Effect/Explosion_H.png"))
     ;
 
     private BufferedImage explodeImage;
 
-    ExplosionImage(String filename) {
+    ExplosionImage(InputStream filename) {
         try {
-            explodeImage = ImageIO.read(new File(filename));
+            explodeImage = ImageIO.read(filename);
         } catch (Exception e) {
             System.out.println(filename + " File not found");
         }

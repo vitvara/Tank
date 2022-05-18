@@ -19,9 +19,9 @@ public class GameGUI extends JPanel implements ActionListener{
     private MainGame maingame;
     private int width;
     private int height;
-    private final Image baseTile = new ImageIcon("image/TileFloor.png").getImage();
-    private final Image oceanTile = new ImageIcon("image/ocean.png").getImage();
-    private final Image treeTile = new ImageIcon("image/TreeTile.png").getImage();
+    private final Image baseTile = new ImageIcon(getClass().getResource("res/TileFloor.png")).getImage();
+    private final Image oceanTile = new ImageIcon(getClass().getResource("res/ocean.png")).getImage();
+    private final Image treeTile = new ImageIcon(getClass().getResource("res/TreeTile.png")).getImage();
     final MainMenuAPI obserable = new MainMenuAPI();
     private JButton resumeBtn = new JButton("Resume");
     private JButton exitBtn = new JButton("Exit To Menu");

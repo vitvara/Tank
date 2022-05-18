@@ -1,5 +1,5 @@
 package enitity;
-
+import utills.imageManager.RockImage;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,12 +12,7 @@ public class Rock extends Obstruction{
 
     @Override
     public BufferedImage getImage() {
-        try {
-            return ImageIO.read(new File("image/Rock.png"));
-        } catch (Exception e) {
-            System.out.println("Rock File not found");
-        }
-        return null;
+        return RockImage.rockImage.getImage();
     }
 
     @Override
