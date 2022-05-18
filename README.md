@@ -4,6 +4,10 @@ Tank2D is a game that have 2 mode first is one-on-one is a game mode that you ca
 
 
 ## Installation Guide
+requirement
+```
+Java version 17++
+```
 
 For MacOS user
 ```
@@ -18,17 +22,25 @@ Click Download setup link
 > https://github.com/vitvara/Tank/raw/main/mysetup.exe
 
 step 1
+
 <img width="451" alt="image" src="https://user-images.githubusercontent.com/69972884/169030476-14f5b7fe-6285-42c1-a50a-ce5d68edcb21.png">
 
 step2
+
 <img width="447" alt="image" src="https://user-images.githubusercontent.com/69972884/169030492-68bdbbc9-0b91-4e80-8a32-a4af5c3c5e73.png">
 
 
 step 3
+
 <img width="454" alt="image" src="https://user-images.githubusercontent.com/69972884/169030536-74885256-a2c7-4eb5-9205-688df00a8b48.png">
 
 finish
+
 <img width="456" alt="image" src="https://user-images.githubusercontent.com/69972884/169030567-6d0f11c7-471f-434c-a3cc-0880738400d8.png">
+
+now you should have game icon in your desktop
+
+<img width="54" alt="image" src="https://user-images.githubusercontent.com/69972884/169033688-cfd977bb-3172-47fd-a9be-76f1b188bf57.png">
 
 ## How to play
 
